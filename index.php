@@ -51,6 +51,21 @@ $sqlVendendores = "SELECT u.name, SUM(s.total) as total_vendas
 $stmtV = $pdo->prepare($sqlVendendores);
 $stmtV->execute([$company_id]);
 $rankingData = $stmtV->fetchAll(PDO::FETCH_ASSOC);
+
+$stmtCritico = $pdo->prepare("SELECT name, stock FROM products WHERE stock <= 5 AND company_id = ? ORDER BY stock ASC");
+$stmtCritico->execute([$company_id]);
+$estoqueCritico = $stmtCritico->fetchAll(PDO::FETCH_ASSOC);
+
+$stmtABC = $pdo->prepare("SELECT p.name, SUM(si.quantity) as total_vendido
+FROM sale_items si
+JOIN products p ON si.product_id = p.id
+WHERE p.company_id = ?
+GROUP BY p.id
+ORDER BY total_vendido DESC
+LIMIT 5");
+$stmtABC->execute([$company_id]);
+$rankingProdutos = $stmtABC->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <!DOCTYPE html>
@@ -180,12 +195,57 @@ $rankingData = $stmtV->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             </div>
 
+            <div class="dashboard-grid"
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;">
+
+                <div class="table-container" style="border-left: 5px solid #e74c3c;">
+                    <h3><i class="fas fa-exclamation-triangle" style="color: #e74c3c;"></i> Estoque Crítico</h3>
+                    <table style="width: 100%; margin-top: 10px;">
+                        <?php if (count($estoqueCritico) > 0): ?>
+                            <?php foreach ($estoqueCritico as $p): ?>
+                                <tr>
+                                    <td>
+                                        <?= htmlspecialchars($p['name']) ?>
+                                    </td>
+                                    <td style="text-align: right;"><span class="badge"
+                                            style="background: #ffdbdb; color: #e74c3c; padding: 4px 8px; border-radius: 4px; font-weight: bold;">
+                                            <?= $p['stock'] ?> un.
+                                        </span></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td style="color: #27ae60;">Tudo sob controle por aqui! <i class="fas fa-check-circle"></i>
+                                </td>
+                            </tr>
+                        <?php endif; ?>
+                    </table>
+                </div>
+
+                <div class="table-container" style="border-left: 5px solid #f1c40f;">
+                    <h3><i class="fas fa-crown" style="color: #f1c40f;"></i> Top 5 Produtos</h3>
+                    <table style="width: 100%; margin-top: 10px;">
+                        <?php foreach ($rankingProdutos as $rp): ?>
+                            <tr>
+                                <td>
+                                    <?= htmlspecialchars($rp['name']) ?>
+                                </td>
+                                <td style="text-align: right; font-weight: bold; color: var(--primary-color);">
+                                    <?= $rp['total_vendido'] ?> vendas
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </table>
+                </div>
+
+            </div>
             <!-- Últimas vendas -->
             <div class="table-container">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                     <h3 style="margin:0;"><i class="fas fa-history"></i> Últimas Vendas</h3>
                     <a href="modules/sales/sales.php" class="btn-link"
-                        style="text-decoration: none; color: var(--primary-color); font-size: 0.9rem;">Ver todas →</a>
+                        style="text-decoration: none; color: var(--primary-color); font-size: 0.9rem;">Ver todas
+                        →</a>
                 </div>
                 <table id="lastSalesTable">
                     <thead>

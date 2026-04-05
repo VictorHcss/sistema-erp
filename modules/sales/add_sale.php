@@ -29,25 +29,18 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        /* Ajuste para Selects dentro de .input-icon */
         .input-icon select.form-control {
             padding-left: 2.8rem;
             appearance: none;
-            /* Remove seta padrão */
             background-image: none;
-            /* Remove seta padrão se houver conflito */
             width: 100%;
             height: 45px;
-            /* Altura consistente */
         }
 
-        /* Garantir que a seta customizada do CSS funcione se aplicável, 
-           mas como .input-icon sobrepõe, vamos simplificar */
         .input-icon select {
             cursor: pointer;
         }
 
-        /* Estilo do botão de remover */
         .btn-remove {
             background-color: #ffebee;
             color: #c62828;
@@ -69,7 +62,6 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
             box-shadow: 0 2px 8px rgba(244, 67, 54, 0.3);
         }
 
-        /* Card do Total Geral */
         .total-summary-card {
             background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
             border: 1px solid rgba(67, 97, 238, 0.2);
@@ -116,8 +108,6 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
             margin-right: 5px;
         }
 
-        /* Ajustes de layout */
-        /* Header padrão restaurado para fundo branco */
         .page-header {
             margin-bottom: 2rem;
             display: flex;
@@ -135,19 +125,16 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
             color: var(--text-muted);
         }
 
-        /* Responsividade da tabela */
         .table-responsive {
             width: 100%;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
         }
 
-        /* Grid gap override */
         .form-row {
             gap: 1.5rem;
         }
 
-        /* Flex Row for specific layouts where Grid is not ideal */
         .form-row-flex {
             display: flex;
             gap: 1.5rem;
@@ -172,7 +159,6 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
             flex: 0 0 auto;
         }
 
-        /* Input Icon Wrapper fix */
         .input-icon-wrapper {
             position: relative;
             width: 100%;

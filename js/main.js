@@ -476,7 +476,24 @@ window.App = {
             }
         },
 
+        checkUrlError: () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('error') === 'permissao_negada') {
+                // Exibir modal ou alert
+                if (typeof App.UI.showToast === 'function') {
+                    App.UI.showToast('Acesso negado. Apenas administradores podem realizar esta ação.', 'error');
+                } else {
+                    alert('Acesso negado. Apenas administradores podem realizar esta ação.');
+                }
+
+                // Remover parâmetro da URL sem recarregar
+                const newUrl = window.location.pathname + window.location.search.replace(/[?&]error=permissao_negada/, '').replace(/^&/, '?');
+                window.history.replaceState({}, document.title, newUrl);
+            }
+        },
+
         setupGlobalEvents: () => {
+            App.UI.checkUrlError();
             const nav = document.querySelector('nav');
             if (nav && !nav.querySelector('.logout-btn')) {
                 const logoutLink = document.createElement('a');
