@@ -1,8 +1,9 @@
+# Ignorar pasta do Banco de Dados
+db/
+/db/
+*.sql
+
+# Outros arquivos desnecessários
 /nbproject/
 /.vscode/
-
 Thumbs.db
-desktop.ini
-*.log
-
-config/config_local.php
