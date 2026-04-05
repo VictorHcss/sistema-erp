@@ -1,0 +1,8 @@
+/nbproject/
+/.vscode/
+
+Thumbs.db
+desktop.ini
+*.log
+
+config/config_local.php
