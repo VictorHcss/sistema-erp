@@ -286,6 +286,7 @@ $settings = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
         </div>
     </main>
 </body>
+<script src="../../js/main.js"></script>
 <script>
     let cropper;
     const inputLogo = document.getElementById('input-logo');

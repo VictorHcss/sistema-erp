@@ -51,9 +51,17 @@ if (!isset($basePath)) {
             <span class="menu-text">Estoque</span>
         </a>
 
+        <?php if (hasRole('admin')): ?>
+            <a href="<?= $basePath ?>modules/config/settings.php" title="Configurações">
+                <i class="fas fa-cogs"></i>
+                <span class="menu-text">Configurações</span>
+            </a>
+        <?php endif; ?>
+
         <a href="<?= $basePath ?>logout.php" title="Sair" class="logout-link">
             <i class="fas fa-sign-out-alt"></i>
             <span class="menu-text">Sair</span>
         </a>
     </nav>
 </aside>
+<script src="<?= $basePath ?>js/main.js?v=<?= time(); ?>"></script>

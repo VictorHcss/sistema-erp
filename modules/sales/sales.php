@@ -153,11 +153,9 @@ $sales = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             if (!modal || !modalBody) return;
 
-            // Show modal immediately
             modal.style.display = 'block';
             modalBody.innerHTML = '<p style="text-align:center; padding: 20px;"><i class="fas fa-spinner fa-spin"></i> Carregando detalhes...</p>';
 
-            // Fetch details
             fetch('sale_view.php?id=' + id + '&modal=1')
                 .then(response => response.text())
                 .then(html => {
@@ -174,7 +172,6 @@ $sales = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if (modal) modal.style.display = 'none';
         }
 
-        // Close when clicking outside
         window.onclick = function (event) {
             const modal = document.getElementById('saleModal');
             if (event.target == modal) {
